@@ -134,7 +134,7 @@ var app = new Vue({
       command += " -ContentType 'application/x-www-form-urlencoded' ";
       command += " -body '" + params.toString() + "' ";
       command += this.endPoints.token;
-      command += "$body = ConvertFrom-Json $tokenResp.Content";
+      command += "\n$body = ConvertFrom-Json $tokenResp.Content";
 
       this.command = command;
     }
