@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div id="app-settings">
+        <h1>App Params</h1>
+        <div id="app-params">
+          <select name="appId" id="appId" v-model="selected_client_id">
+            <option v-for="app in appList">{{ app.client_id }}</option>
+          </select>
+          <div>
+            <input
+              type="text"
+              v-model="currentApp.client_id"
+              placeholder="client_id"
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              v-model="currentApp.client_secret"
+              placeholder="client_secret"
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              v-model="currentApp.tenant_id"
+              placeholder="tenant_id"
+            />
+          </div>
+          <div>
+            <input
+              type="button"
+              v-on:click="deleteSelectedClient"
+              value="delete client"
+            />
+          </div>
+        </div>
+      </div>
+      <div id="sign-in-form">
+        <h2>Sign In Params</h2>
+        <div id="sign-in-params">
+          <div>
+            <input type="text" value="client_id" disabled="disabled" />
+            <input
+              type="text"
+              v-model="currentApp.client_id"
+              disabled="disabled"
+            />
+            <!-- <input type="text" value="aaa" id=""> -->
+          </div>
+          <div v-for="param in signInParams">
+            <input type="text" v-model="param.name" />
+            <input type="text" v-model="param.value" />
+            <input
+              type="button"
+              value="delete"
+              v-on:click="deleteParam('signInParams',param.name)"
+            />
+          </div>
+          <div id="sign-in-button-form">
+            <input
+              type="button"
+              v-on:click="addEmptyParam('signInParams')"
+              value="add param"
+            />
+            <select id="endpoint-versions" v-model="version">
+              <option value="1">v1.0</option>
+              <option value="2">v2.0</option>
+            </select>
+            <p>
+              <a v-bind:href="signInUrl" target="_blank">{{ signInUrl }}</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div id="frontend-app">
+        <div id="frontend-params"></div>
+      </div>
+      <div id="backend-server">
+        <h2>Backend Params</h2>
+        <div id="backend-params">
+          <div>
+            <input type="text" value="client_id" disabled="disabled" />
+            <input
+              type="text"
+              v-model="currentApp.client_id"
+              disabled="disabled"
+            />
+          </div>
+          <div>
+            <input type="text" value="client_secret" disabled="disabled" />
+            <input
+              type="text"
+              v-model="currentApp.client_secret"
+              disabled="disabled"
+            />
+          </div>
+          <div v-for="param in backendParams">
+            <input type="text" v-model="param.name" />
+            <input type="text" v-model="param.value" />
+            <input
+              type="button"
+              value="delete"
+              v-on:click="deleteParam('backendParams',param.name)"
+            />
+          </div>
+          <input
+            type="button"
+            v-on:click="addEmptyParam('backendParams')"
+            value="add param"
+          />
+          <input type="button" value="get token" v-on:click="getToken" />
+        </div>
+      </div>
+    </div>
+    <script src="src/main.js"></script>
+  </body>
+</html>
