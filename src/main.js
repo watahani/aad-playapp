@@ -130,10 +130,11 @@ var app = new Vue({
         return result;
       },new URLSearchParams());
 
-      let command = "Invoke-WebRequest -Method POST "
+      let command = "$tokenResp = Invoke-WebRequest -Method POST "
       command += " -ContentType 'application/x-www-form-urlencoded' ";
       command += " -body '" + params.toString() + "' ";
-      command += this.endPoints.token
+      command += this.endPoints.token;
+      command += "$body = ConvertFrom-Json $tokenResp.Content";
 
       this.command = command;
     }
