@@ -118,7 +118,10 @@
             v-on:click="addEmptyParam('backendParams')"
             value="add param"
           />
-          <input type="button" value="get token" v-on:click="getToken" />
+          <input type="button" value="show command" v-on:click="showCommand" />
+          <div>
+            <p>{{command}}</p>
+          </div>
         </div>
       </div>
     </div>

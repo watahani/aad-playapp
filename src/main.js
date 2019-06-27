@@ -54,6 +54,7 @@ var app = new Vue({
   el: '#app',
   data: {
     version: 2,
+    command: "",
     selected_client_id: appList.length > 0 ? appList[0].client_id : "",
     appList: appList,
     signInParams: signInParams,
@@ -96,9 +97,8 @@ var app = new Vue({
         return true;
       });
     },
-    getToken: function () {
+    showCommand: function () {
       let redirect_uri = this.signInParams.filter(v => v.name === 'redirect_uri')[0].value;
-      console.log('redirect_uri',redirect_uri)
       var params = [
         {    
           name: 'client_id',
@@ -130,20 +130,12 @@ var app = new Vue({
         return result;
       },new URLSearchParams());
 
-      fetch(this.endPoints.token, {
-        method: "POST",
-        mode: 'no-cors',
-        body: params
-      })
-      .then(response => {
-        return response.json();
-      })
-      .then(json => {
-        console.log(json);
-      })
-      .catch(e => {
-        console.error(e.message);
-      });
+      let command = "Invoke-WebRequest -Method POST "
+      command += " -ContentType 'application/x-www-form-urlencoded' ";
+      command += " -body '" + params.toString() + "' ";
+      command += this.endPoints.token
+
+      this.command = command;
     }
   },
   computed: {
