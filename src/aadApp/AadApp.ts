@@ -24,20 +24,22 @@ interface AADAppParam {
   client_id: string;
   client_secret?: string;
   appType: "common" | "organizations" | "consumers" | "tenantOnly";
-  response_type: ResponseTypeEnum[];
   scope: string[];
   redirectUris: Array<{
     isDefault: boolean;
     uri: string;
   }>;
-  tokenRequestParam?: { [key: string]: string }[];
+  tokenRequestParams?: { [key: string]: string }[];
+  authorizeRequestParams: {
+    response_type: ResponseTypeEnum[];
+    nonce?: string;
+    state?: string;
+    code_verifier?: string;
+    response_mode?: "fragment" | "query" | "form_post";
+    prompt?: "login" | "select_account" | "consent" | "admin_consent";
+    code_challenge_method?: CODE_CHALLENGE_METHOD;
+  };
   apiVersion: 1 | 2;
-  nonce?: string;
-  state?: string;
-  code_verifier?: string;
-  response_mode?: "fragment" | "query" | "form_post";
-  prompt?: "login" | "select_account" | "consent" | "admin_consent";
-  code_challenge_method?: CODE_CHALLENGE_METHOD;
   [key: string]: any;
 }
 class AADApp {
@@ -53,12 +55,18 @@ class AADApp {
     console.debug(this.appParam);
     for (let [key, value] of Object.entries(this.appParam)) {
       if (!allowedAuthorizeRequestParams.includes(key)) {
-        if (key === "code_verifier" && this.appParam.code_challenge_method) {
-          const codeChallenge = generateCodeChallenge(
-            value,
-            this.appParam.code_challenge_method
-          );
-          authorizePrams.push(`code_challenge=${codeChallenge}`);
+        if (key === "authorizeRequestParams") {
+          for (let [k, v] of Object.entries(this.appParam[key])) {
+            if (k === "code_verifier" && this.appParam.code_challenge_method) {
+              const codeChallenge = generateCodeChallenge(
+                value,
+                this.appParam.code_challenge_method
+              );
+              authorizePrams.push(`code_challenge=${codeChallenge}`);
+            } else {
+              authorizePrams.push(`${k}=${v}`);
+            }
+          }
         }
         console.debug(`${key} is not allowed in authorize request param.`);
         continue;

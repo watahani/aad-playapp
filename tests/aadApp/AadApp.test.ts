@@ -1,9 +1,4 @@
-import {
-  AADApp,
-  AADAppParam,
-  ResponseTypeEnum,
-  CODE_CHALLENGE_METHOD
-} from "@/aadApp/AadApp";
+import { AADApp, ResponseTypeEnum } from "@/aadApp/AadApp";
 
 import testParam from "./testParam";
 

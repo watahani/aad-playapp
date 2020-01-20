@@ -1,4 +1,4 @@
-import testParam from "./testParam";
+import testParam from "./aadApp/testParam";
 import { PlayApp } from "@/PlayApp";
 import { AADApp } from "@/aadApp/AadApp";
 import { CODE_CHALLENGE_METHOD } from "@/aadApp/pkce";
@@ -31,8 +31,10 @@ describe("aad play app", () => {
 
   it("code challenge", () => {
     const appParam = testParam();
-    appParam.code_verifier = "dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk";
-    appParam.code_challenge_method = CODE_CHALLENGE_METHOD.S256;
+    appParam.authorizeRequestParams.code_verifier =
+      "dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk";
+    appParam.authorizeRequestParams.code_challenge_method =
+      CODE_CHALLENGE_METHOD.S256;
     const app1 = new AADApp(appParam);
     const aadApp = new PlayApp([app1]);
 

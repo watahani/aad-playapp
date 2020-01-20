@@ -2,9 +2,8 @@ import { AADAppParam, ResponseTypeEnum } from "@/aadApp/AadApp";
 
 const defaultParams: AADAppParam = {
   apiVersion: 2,
-  client_id: "eff64ce9-b445-4657-ac0b-378544e9d0bd",
   appType: "tenantOnly",
-  response_type: [ResponseTypeEnum.CODE],
+  client_id: "eff64ce9-b445-4657-ac0b-378544e9d0bd",
   scope: ["openid"],
   redirectUris: [
     {
@@ -12,7 +11,9 @@ const defaultParams: AADAppParam = {
       uri: "https://watahani.github.io/aad-playapp/"
     }
   ],
-  url_params: [],
+  authorizeRequestParams: {
+    response_type: [ResponseTypeEnum.CODE]
+  },
   client_secret: "secret",
   tenant_id: "whdv.onmicrosoft.com",
   display_name: "App 1"

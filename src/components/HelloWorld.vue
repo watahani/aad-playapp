@@ -2,10 +2,10 @@
   <div class="hello">
     <h1>App</h1>
     <div>
+      <h2>{{ app.appParam.display_name }}</h2>
       <ol>
-        <li v-for="a in app.appList" v-bind:key="a.client_id">
-          <h2>{{ a.appParam.display_name }}</h2>
-          <h3>??? {{ a.authorizeUri }}</h3>
+        <li>
+          <input type="text" name="" id="" />
         </li>
       </ol>
     </div>
@@ -14,11 +14,47 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { PlayApp } from "@/PlayApp";
+import { AADApp } from "../aadApp/AadApp";
+
+/**
+ * interface AADAppParam {
+  display_name?: string;
+  tenant_id?: string;
+  client_id: string;
+  client_secret?: string;
+  appType: "common" | "organizations" | "consumers" | "tenantOnly";
+  response_type: ResponseTypeEnum[];
+  scope: string[];
+  redirectUris: Array<{
+    isDefault: boolean;
+    uri: string;
+  }>;
+  tokenRequestParam?: { [key: string]: string }[];
+  apiVersion: 1 | 2;
+  nonce?: string;
+  state?: string;
+  code_verifier?: string;
+  response_mode?: "fragment" | "query" | "form_post";
+  prompt?: "login" | "select_account" | "consent" | "admin_consent";
+  code_challenge_method?: CODE_CHALLENGE_METHOD;
+  [key: string]: any;
+}
+
+ */
+
+const stringParams: string[] = ["display"];
 
 @Component
 export default class HelloWorld extends Vue {
-  @Prop() private app!: PlayApp;
+  @Prop()
+  private app!: AADApp;
+
+  data() {
+    return {
+      currentApp: Object.assign({}, this.app),
+      message: "hello"
+    };
+  }
 }
 </script>
 
